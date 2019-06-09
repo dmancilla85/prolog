@@ -1,0 +1,45 @@
+Instrucciones para el intérprete de Prolog
+==========================================
+
+% Listar todas las variables hasta que falle.
+consulta(X), write(X), nl, fail.
+
+% Listar todas las variables hasta que falle (con separador).
+relacion(X,Y), write(X+Y), nl, fail.
+relacion(X,Y), write(X), write(' '), write(Y), nl, fail.
+
+% Cabeza de la regla  | Op. IMPLICA | Cola de la regla
+----------------------------------------------------------
+    limitrofes(X,Y)   | :-	    | limita_con(Y,X).
+
+Se lee: SI limita_con(X,Y) ENTONCES SON limitrofes(X,Y)
+
+OR -> . ;  AND -> ,
+
+% Cabeza de la regla  | Op. IMPLICA | Cola de la regla
+----------------------------------------------------------
+    pais_pequeño(X,Y) | :-	    | superficie_pais(X,Y), Y < 100000
+
+
+
+==============
+
+1. Reglas simples
+2. Reglas compuestas (introducen relación entre objetos)
+3. Reglas con encabezado y cola formada por un predicado o más (Consultas conjuntivas y disyuntivas).
+
+
+==============
+
+Operadores relacionales
+========================
+Unarios
+proyectarAtributo(X) 		:- tabla(X,_). % Genera una tabla' la cual es la proyección de X.
+seleccion(X,Y) 			:- tabla(X,Y), condición_lógica. % Genera una nueva tabla cuyos elementos cumplen la condición requerida
+
+Binarios
+producto_cartesiano(X,C,X1,C1) 	:- tabla1(X,C), tabla2(X1,C1). % Tabla1 X Tabla2 (Realiza el producto cartesiano entre 
+							       % los elementos de las tablas)
+union(X,Y) 			:- tabla1(X,Y); tabla2(X,Y). % Tabla1 U Tabla2 (Los atributos deben tener el mismo dominio (*))
+interseccion(X,Y)		:- tabla1(X,Y), tabla2(X,Y). % Tabla1 ^ Tabla2 (Obtiene las tuplas en común entre ambas tablas, (*))
+diferencia(X,Y)			:- tabla1(X,Y), \+ (tabla2(X,Y)). % Tabla1 - Tabla2
